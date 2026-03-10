@@ -53,9 +53,12 @@ function animaster () {
         element.classList.add('show');
     }
 
-    function move(element, duration, translation) {
+    function _move(element, duration, translation) {
         element.style.transitionDuration = `${duration}ms`;
         element.style.transform = getTransform(translation, null);
+    }
+    function move(element, duration, translation) {
+        this.addMove(duration, translation).play(element);
     }
 
     function scale(element, duration, ratio) {
@@ -66,6 +69,46 @@ function animaster () {
         element.style.transitionDuration =  `${duration}ms`;
         element.classList.remove('show');
         element.classList.add('hide');
+    }
+
+    function addMove(duration, translation) {
+        this._steps.push({
+            type: 'move',
+            duration: duration,
+            translation: translation
+        });
+
+        return this;
+    }
+
+    function play(element) {
+        let delay = 0;
+
+        for (const step of this._steps) {
+            setTimeout(() => {
+
+                switch (step.type) {
+                    case 'move':
+                        _move(element, step.duration, step.translation);
+                        break;
+
+                    case 'scale':
+                        scale(element, step.duration, step.ratio);
+                        break;
+
+                    case 'fadeIn':
+                        fadeIn(element, step.duration);
+                        break;
+
+                    case 'fadeOut':
+                        fadeOut(element, step.duration);
+                        break;
+                }
+            }, delay);
+
+            delay += step.duration;
+            this._steps = [];
+        }
     }
     function moveAndHide(element, duration, translation) {
         return this
@@ -120,6 +163,11 @@ function animaster () {
     animator.moveAndHide = moveAndHide;
     animator.heartBeating = heartBeating;
     animator.showAndHide = showAndHide;
+    animator.addMove = addMove;
+    animator.play = play;
+
+    animator._steps = []
+
 
     return animator;
 
