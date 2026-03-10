@@ -93,6 +93,23 @@ function animaster () {
         };
     }
 
+    function resetFadeIn (element) {
+        element.style.transitionDuration = null;
+        element.classList.remove('show');
+        element.classList.add('hide');
+    }
+
+    function resetFadeOut (element) {
+        element.style.transitionDuration = null;
+        element.classList.remove('hide');
+        element.classList.add('show');
+    }
+
+    function resetMoveAndScale (element) {
+        element.style.transitionDuration = null;
+        element.style.transform = null;
+    }
+
     const animator = {};
     animator.fadeIn = fadeIn;
     animator.scale = scale;
