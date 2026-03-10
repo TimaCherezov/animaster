@@ -130,7 +130,7 @@ function animaster () {
         fadeIn(element, duration / 3);
         setTimeout(() => {
             fadeOut(element, duration / 3);
-        }, duration / 3 + 10); // небольшой буфер
+        }, duration / 3);
     }
     function heartBeating(element, duration) {
         const interval = setInterval(() => {
