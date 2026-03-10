@@ -123,13 +123,14 @@ function animaster () {
         }
     }
     function moveAndHide(element, duration, translation) {
-        move(element, duration * 2/5, translation);
-        fadeOut(element, duration * 3/5);
+        _move(element, duration * 2/5, translation);
+        setTimeout(() => fadeOut(element, duration * 3/5), duration * 2/5);
     }
     function showAndHide(element, duration) {
-        fadeIn(element, duration * 1/3)
-        setTimeout(() => _, duration * 1/3)
-        fadeOut(element, duration * 1/3);
+        fadeIn(element, duration / 3);
+        setTimeout(() => {
+            fadeOut(element, duration / 3);
+        }, duration / 3 + 10); // небольшой буфер
     }
     function heartBeating(element, duration) {
         const interval = setInterval(() => {
